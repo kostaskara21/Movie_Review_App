@@ -1,0 +1,70 @@
+﻿@using CinemaApp.ViewModels
+
+<!--
+    In the Details View we want to pass the movie we want to show the details and also some movies related to this
+    We can not pass in the View both the Movie and also a list of movies
+    So we made the ModelView and we are passing this witch has both things that we want to display
+ -->
+@model MovieDetailViewModel
+
+
+
+<div class="container">
+
+   <h1 class="my-4">
+        Movie Details
+        <small>Secondary Text</small>
+    </h1>
+
+    <!-- Movie We Displaying thr Info -->
+    <div class="row">
+
+        <div class="col-md-8">
+            
+            <img src="@Model.MyMovie.Image" alt="Thumbnail" class="bd-placeholder-img card-img-top" width="100%" height="225">
+        </div>
+
+        <div class="col-md-4">
+            
+            <h3 class="my-3">Movie Details</h3>
+            <ul>
+                <li>@Model.MyMovie.Title </li>
+                <li>@Model.MyMovie.Categories</li>
+            </ul>
+            <h3 class="my-3">Movie Description</h3>
+            <p>@Model.MyMovie.Description</p>
+        </div>
+
+    </div>
+
+    
+    <!-- Related Movies Row -->
+    <h3 class="my-4">Related Projects</h3>
+    <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @foreach(var morem in Model.MoreMoviesM)
+    {
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="@morem.Image" alt="Thumbnail" class="bd-placeholder-img card-img-top" width="100%" height="225">
+
+                <div class="card-body">
+                    <p class="card-text">@morem.Description</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        </div>
+                        <small class="text-body-secondary">9 mins</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    </div>
+    </div>
+
+
+    
