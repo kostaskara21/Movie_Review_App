@@ -1,0 +1,49 @@
+﻿@using CinemaApp.Data.Dto
+@using CinemaApp.Data.Enum
+@model MovieCreateDto
+
+<form method="post", action="Create" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="Title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input asp-for="Title" type="text" class="form-control" placeholder="Title">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+       
+    </div>
+   
+    
+       
+    <div class="form-group row">
+        <label for="Categories" class="col-sm-2 col-form-label">Categories</label>
+        <div class="col-sm-10">
+            <select asp-for="Categories" asp-items="@Html.GetEnumSelectList<Categories>()">
+                    <option>--Options--</option>
+            </select>
+            <span asp-validation-for="Categories" class="text-danger"></span>
+        </div>
+       
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group row">
+        <label for="Image" class="col-sm-2 col-form-label">Image</label>
+        <div class="col-sm-10">
+            <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+    </div>
+    
+    
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+
+    
+</form>

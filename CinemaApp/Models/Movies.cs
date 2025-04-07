@@ -12,6 +12,7 @@ namespace CinemaApp.Models
 
        public string Title { get; set; }
 
+       [MaxLength(320)]
        public string Description { get; set; }
 
        public string Image { get; set; }

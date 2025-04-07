@@ -16,7 +16,7 @@ namespace CinemaApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
+            
             modelBuilder.Entity<Movies>().HasData(
                  new Movies
                  {
@@ -58,8 +58,7 @@ namespace CinemaApp.Data
                      Categories = Categories.Fantasy,
                      AppUserId = null
                  });
-            */
-
+            
         }
     }
 }
