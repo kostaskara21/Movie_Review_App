@@ -1,4 +1,5 @@
 ﻿using CinemaApp.Data.Dto;
+using CinemaApp.Helpers;
 using CinemaApp.Models;
 
 
@@ -9,6 +10,7 @@ namespace CinemaApp.Interfaces
 
         //With this we are returning all the Movies
         Task<List<Movies>> Index();
+        Task<(List<Movies> movies,Pager p)> Index(int pg);
 
        
 

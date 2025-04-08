@@ -1,5 +1,6 @@
 ﻿using CinemaApp.Data;
 using CinemaApp.Data.Dto;
+using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
 
@@ -25,10 +26,12 @@ namespace CinemaApp.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        //This Index is for the Pagiantion
+        public async Task<IActionResult> Index(int pg=1)
         {
             //var Movies=_context.Movies.ToList();
-            var Movies= await _movies.Index();
+            var (Movies,p)= await _movies.Index(pg);
+            ViewBag.Pager = p;
             return View(Movies);
         }
 

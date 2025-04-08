@@ -1,8 +1,10 @@
 ﻿using CinemaApp.Data;
 using CinemaApp.Data.Dto;
+using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CinemaApp.Repositories
 {
@@ -75,8 +77,21 @@ namespace CinemaApp.Repositories
             return Save();
         }
 
-       
+        public async Task<(List<Movies> movies, Pager p)> Index(int pg = 1)
+        {
+            var movies = await _context.Movies.ToListAsync();
+            const int pageSize = 3;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+            int recsCount = movies.Count;
+            var pager = new Pager(recsCount, pg, pageSize); // This should now correctly initialize
+            int recSkip = (pg - 1) * pageSize;
+            var data = movies.Skip(recSkip).Take(pager.PageSize).ToList();
 
-       
+            return (data, pager);
+        }
+
     }
 }
