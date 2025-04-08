@@ -1,9 +1,9 @@
 ﻿using CinemaApp.Models;
 
-namespace CinemaApp.ViewModels
+namespace CinemaApp.Data.Dto
 {
     //We are making this model in order to wrap the Movie we want to Display and also the List of related movies
-    public class MovieDetailViewModel
+    public class MovieDetailDto
     {
         //The Movie we want to show Details For 
         public Movies MyMovie { get; set; }

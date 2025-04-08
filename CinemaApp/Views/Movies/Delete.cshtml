@@ -1,9 +1,9 @@
 ﻿@using CinemaApp.Data.Dto
 @using CinemaApp.Data.Enum
-@model MovieEditDto
+@model MovieDeleteDto
+<h1>Are you Sure you want to Delete that Movie?</h1>
+<form action="Delete" method="post" enctype="multipart/form-data">
 
-<form  action="Edit" method="post"  enctype="multipart/form-data">
-    
     <input asp-for="Id" type="hidden" class="form-control" placeholder="Title">
     <input asp-for="AppUserId" type="hidden" class="form-control" placeholder="Title">
     <input asp-for="Reviews" type="hidden" class="form-control" placeholder="Title">
@@ -19,7 +19,7 @@
     <div class="form-group row">
         <label for="Categories" class="col-sm-2 col-form-label">Categories</label>
         <div class="col-sm-10">
-            
+
             <select asp-for="Categories" asp-items="@Html.GetEnumSelectList<Categories>()">
                 <option>--Options--</option>
             </select>
@@ -40,11 +40,9 @@
             <span asp-validation-for="Image" class="text-danger"></span>
         </div>
     </div>
-
-
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Delete</button>
         </div>
     </div>
 

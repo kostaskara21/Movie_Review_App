@@ -15,13 +15,15 @@
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <a asp-controller="Movies" asp-action="Details" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
+                     </div>
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
                 </div>
               </div>
-            </div>    
+            
         }
         </div>
     </div>

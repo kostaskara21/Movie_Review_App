@@ -1,7 +1,7 @@
 ﻿using CinemaApp.Data;
+using CinemaApp.Data.Dto;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
-using CinemaApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaApp.Repositories
@@ -15,30 +15,16 @@ namespace CinemaApp.Repositories
             _context = context;
         }
 
-        
-        //This is for makign the MoviedetailsModelView and returning it in the controller
-        //So we do not make our cotroller bigger and also proving loose coupling 
-        public async Task<MovieDetailViewModel> Details(int id)
-        {
-            //Movie we want to Display Details
-            var DetailMovie = await this.GetMovieById(id);
-
-            //Relared Movies
-            var MoreMovies = await this.GetRelatedMovies(id);
-            
-            //We are making the model 
-            return  new MovieDetailViewModel
-            {
-                MyMovie = DetailMovie,
-                MoreMoviesM = MoreMovies
-            };
-        }
+      
 
         //For Details(Giving spicific movie)
         public async Task<Movies> GetMovieById(int id)
         {
             //Movie we want to Display Details
             var Movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            if (Movie == null) {
+                return null;
+            }
             return Movie;
 
         }
@@ -89,19 +75,8 @@ namespace CinemaApp.Repositories
             return Save();
         }
 
-        public async Task<Movies> Edit(int id)
-        {
-           var movie=await this.GetMovieById(id);
-            if (movie == null)
-            {
-                return null;
-            }
-            return movie;
-        }
+       
 
-        public bool Update(int Id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

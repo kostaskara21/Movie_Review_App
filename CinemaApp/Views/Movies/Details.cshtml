@@ -1,11 +1,13 @@
-﻿@using CinemaApp.ViewModels
+﻿@using CinemaApp.Data.Dto
+
 
 <!--
     In the Details View we want to pass the movie we want to show the details and also some movies related to this
     We can not pass in the View both the Movie and also a list of movies
     So we made the ModelView and we are passing this witch has both things that we want to display
+    Same thing as Dtos
  -->
-@model MovieDetailViewModel
+@model MovieDetailDto
 
 
 
@@ -54,7 +56,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                                         <a asp-controller="Movies" asp-action="Details" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                         </div>
                         <small class="text-body-secondary">9 mins</small>
                     </div>

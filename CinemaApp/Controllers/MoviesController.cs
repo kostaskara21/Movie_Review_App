@@ -2,8 +2,9 @@
 using CinemaApp.Data.Dto;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
-using CinemaApp.ViewModels;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaApp.Controllers
 {
@@ -33,16 +34,22 @@ namespace CinemaApp.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //We are using the Repo and getting Back A View Model that we made (for passing to the View both List and also Single Movie)
+            //We are using the Repo and getting Back A View Model that we made (for passing to the View both List and also Single Movie) 
             //We mostly care about the Specific movie thats why we are only ckecking one attribut of the ModelView
-            var MovieDetailViewModel= await _movies.Details(id);
-            if (MovieDetailViewModel.MyMovie == null)
+            var DetailedMovie= await _movies.GetMovieById(id);
+            var RelatedMovies=await _movies.GetRelatedMovies(id);
+            if (DetailedMovie != null)
             {
-                return NotFound();
-            }
+                var MovieDetailViewModel = new MovieDetailDto
+                {
+                    MyMovie = DetailedMovie,
+                    MoreMoviesM = RelatedMovies
 
-            //Passing this to the View
-            return View(MovieDetailViewModel);
+                };
+                return View(MovieDetailViewModel);
+            }
+            return NotFound();
+            
         }
 
 
@@ -78,13 +85,107 @@ namespace CinemaApp.Controllers
            
         }
 
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-
-            return View();
+            var movie=await _movies.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            var EditModel = new MovieEditDto
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Description = movie.Description,
+                URL = movie.Image,
+                
+                Categories = movie.Categories
+            };
+            return View(EditModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id,MovieEditDto movieEditDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Changes Could not be made Try Again");
+                return View();
+            }
+            var movie = await _movies.GetMovieById(id);
+            _context.Entry(movie).State = EntityState.Detached; // Detach the original entity
 
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                try
+                {
+                    var imgcloudinary = await _photoService.DeletePhotoAsync(movie.Image);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Could not delete the Photo");
+                    return View();
+
+                }
+                var result = await _photoService.AddPhotoAsync(movieEditDto.Image);
+                var NewMovie = new Movies
+                {
+                    Id = movieEditDto.Id,
+                    Title = movieEditDto.Title,
+                    Description = movieEditDto.Description,
+                    Image = result.Url.ToString(),
+                    Categories = movieEditDto.Categories
+                };
+                
+                _movies.Update(NewMovie);
+                return RedirectToAction("Index");
+            }
+            
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var movie = await _movies.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            var DeleteModel = new MovieDeleteDto
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Description = movie.Description,
+                URL = movie.Image,
+                Categories = movie.Categories
+            };
+            return View(DeleteModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id,MovieDeleteDto m)
+        {
+            var movie = await _movies.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var imgcloudinary = await _photoService.DeletePhotoAsync(movie.Image);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Could not delete the Photo");
+                return View();
+
+            }
+            _movies.Remove(movie);
+            return RedirectToAction("Index");
+        }
 
 
 
