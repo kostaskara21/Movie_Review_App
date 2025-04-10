@@ -8,11 +8,13 @@
             @TempData["LogIn"]
         </div>
     }
+   
 }
 
 <form asp-action="LogIn" method="post">
+    <h1>Please Sign In </h1>
     <div class="form-group">
-        <label asp-for="EmailAdress">Email address</label>
+        <label asp-for="EmailAdress">Email Address</label>
         <input asp-for="EmailAdress" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
         <span asp-validation-for="EmailAdress" class="text-danger"></span>
     </div>

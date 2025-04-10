@@ -1,0 +1,47 @@
+﻿@using CinemaApp.Data.Dto
+@model AccountSignUpDto
+
+@{
+    var NoError = TempData["SignUpNoError"];
+    var Error = TempData["SignUpErrror"];
+    if (NoError != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SignUpNoError"]
+        </div>
+    }
+    if ( Error  != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["SignUpErrror"]
+        </div>
+    }
+}
+
+<form asp-action="SignUp" method="post">
+    <h1>Please Sign Up</h1>
+    <div class="form-group">
+        <label asp-for="FirstName">FirstName</label>
+        <input asp-for="FirstName" type="text" class="form-control"  >
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">LastName</label>
+        <input asp-for="LastName" type="text" class="form-control"  >
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailAdress">Email address</label>
+        <input asp-for="EmailAdress" type="email" class="form-control" aria-describedby="emailHelp" >
+        <span asp-validation-for="EmailAdress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" type="password" class="form-control" >
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
