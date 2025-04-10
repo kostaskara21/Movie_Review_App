@@ -80,7 +80,7 @@ namespace CinemaApp.Repositories
         public async Task<(List<Movies> movies, Pager p)> Index(int pg = 1)
         {
             var movies = await _context.Movies.ToListAsync();
-            const int pageSize = 3;
+            const int pageSize = 6;
             if (pg < 1)
             {
                 pg = 1;

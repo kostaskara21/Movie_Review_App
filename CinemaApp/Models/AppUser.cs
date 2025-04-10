@@ -1,11 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace CinemaApp.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-       [Key]
-       public string Id { get; set; }
+       
+       [DisplayName("First Name")] 
+       public string FirstName { get; set; }
+
+        [DisplayName("Last Name")]
+        public string LastName { get; set; } 
 
        public List<Movies> Movies { get; set; }
        public List<Reviews> Reviews { get; set; }
