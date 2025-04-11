@@ -20,3 +20,25 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.comment-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #e0e0e0; /* For Firefox */
+}
+
+.comment-list::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.comment-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.comment-list::-webkit-scrollbar-track {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}

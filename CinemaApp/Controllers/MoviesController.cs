@@ -3,26 +3,31 @@ using CinemaApp.Data.Dto;
 using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaApp.Controllers
 {
+
+    [Authorize]
     public class MoviesController : Controller
     {
         private readonly IMovies _movies;
         private readonly IPhotoService _photoService;
+        private readonly UserManager<AppUser> _userManager;
 
         private readonly ApplicationDbContext _context;
         
 
 
-        public MoviesController(ApplicationDbContext context, IMovies movies, IPhotoService photoService)
+        public MoviesController(ApplicationDbContext context, IMovies movies, IPhotoService photoService,UserManager<AppUser> userManager)
         {
             _context = context;
             _movies = movies;
             _photoService = photoService;
+            _userManager = userManager;
         }
 
 
@@ -46,7 +51,8 @@ namespace CinemaApp.Controllers
                 var MovieDetailViewModel = new MovieDetailDto
                 {
                     MyMovie = DetailedMovie,
-                    MoreMoviesM = RelatedMovies
+                    MoreMoviesM = RelatedMovies,
+                    Reviews = DetailedMovie.Reviews
 
                 };
                 return View(MovieDetailViewModel);

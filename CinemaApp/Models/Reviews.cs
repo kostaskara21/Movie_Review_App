@@ -9,8 +9,7 @@ namespace CinemaApp.Models
 
         public string Comment { get; set; }
 
-        public int Rating { get; set; }
-
+       
 
         //Our Foreign Key for Movies table
         [ForeignKey("Movies")]
@@ -21,7 +20,8 @@ namespace CinemaApp.Models
         //Our Foreign Key for AppUser table
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        
+        public  AppUser AppUser { get; set; }
 
 
     }

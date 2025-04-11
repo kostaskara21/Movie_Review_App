@@ -8,6 +8,9 @@ namespace CinemaApp.Data.Dto
         //The Movie we want to show Details For 
         public Movies MyMovie { get; set; }
 
+       //Added this in order to get the reviews from the detailed model 
+        public List<Reviews> Reviews { get; set; }
+
         //The Related Movies We want to show 
         public List<Movies> MoreMoviesM { get; set; }
     }

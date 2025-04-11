@@ -3,6 +3,7 @@ using CinemaApp.Data.Dto;
 using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -12,9 +13,11 @@ namespace CinemaApp.Repositories
     {
 
         private readonly ApplicationDbContext _context;
-        public MoviesRepo(ApplicationDbContext context)
+        
+        public MoviesRepo(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            
         }
 
       
@@ -23,7 +26,7 @@ namespace CinemaApp.Repositories
         public async Task<Movies> GetMovieById(int id)
         {
             //Movie we want to Display Details
-            var Movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            var Movie = await _context.Movies.Include(x=>x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
             if (Movie == null) {
                 return null;
             }
@@ -35,7 +38,9 @@ namespace CinemaApp.Repositories
         public async Task<List<Movies>> GetRelatedMovies(int id)
         {
             //Relared Movies
-            var MoreMovies = await _context.Movies.Where(x => x.Id != id).Take(3).ToListAsync();
+            //Include is for lazy loading for adding the revies of each movie and then include is for being able to acces the Appuser obj
+            var MoreMovies = await _context.Movies.Include(x=>x.Reviews).ThenInclude(i=>i.AppUser).Take(3).ToListAsync();
+            
             return MoreMovies;
         }
 
