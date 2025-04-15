@@ -18,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IMovies, MoviesRepo>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IReview, ReviewRepo>();
+builder.Services.AddScoped<IDashboard, DashboardRepo>();
+builder.Services.AddScoped<IHome, HomeRepo>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 

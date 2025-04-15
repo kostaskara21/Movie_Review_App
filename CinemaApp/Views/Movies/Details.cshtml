@@ -16,7 +16,7 @@ Same thing as Dtos
     <div class="row">
         <!-- Movie Details Section (1st Column) -->
         <div class="col-md-6">
-            
+
             <div class="p-3 border rounded shadow-sm h-100 bg-light">
                 <img src="@Model.MyMovie.Image" alt="Thumbnail" class="bd-placeholder-img card-img-top mb-3" width="100%" height="350">
                 <h3 class="my-3">Movie Details</h3>
@@ -26,6 +26,11 @@ Same thing as Dtos
                 </ul>
                 <h3 class="my-3">Movie Description</h3>
                 <p>@Model.MyMovie.Description</p>
+                @if(Model.MyMovie.AppUserId!=null){
+                    <h3 class="my-3">Movie Made By</h3>
+                    <p>@Model.MyMovie.AppUserId</p> 
+                }
+               
             </div>
         </div>
 
@@ -85,8 +90,11 @@ Same thing as Dtos
                     <p class="card-text">@morem.Description</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a asp-controller="Movies" asp-action="Edit" asp-route-id="@morem.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            }
                         </div>
                         <small class="text-body-secondary">9 mins</small>
                     </div>

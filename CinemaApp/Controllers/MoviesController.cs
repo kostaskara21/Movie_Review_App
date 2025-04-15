@@ -74,14 +74,15 @@ namespace CinemaApp.Controllers
            
             if (ModelState.IsValid)
             {
-                
+                var userid = _userManager.GetUserId(User);
                 var result = await _photoService.AddPhotoAsync(movies.Image);
                 var movie = new Movies
                 {
                     Title = movies.Title,
                     Description = movies.Description,
                     Image = result.Url.ToString(),
-                    Categories = movies.Categories
+                    Categories = movies.Categories,
+                    AppUserId=userid
                 };
                 _movies.Add(movie);
                 return RedirectToAction("Index");
@@ -147,7 +148,8 @@ namespace CinemaApp.Controllers
                     Title = movieEditDto.Title,
                     Description = movieEditDto.Description,
                     Image = result.Url.ToString(),
-                    Categories = movieEditDto.Categories
+                    Categories = movieEditDto.Categories,
+                    AppUserId=_userManager.GetUserId(User),
                 };
                 
                 _movies.Update(NewMovie);
@@ -193,7 +195,7 @@ namespace CinemaApp.Controllers
 
             }
             _movies.Remove(movie);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dashboard");
         }
 
 

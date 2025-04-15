@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CinemaApp.Interfaces;
 using CinemaApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,15 +8,18 @@ namespace CinemaApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHome _home;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHome home)
         {
             _logger = logger;
+            _home = home;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+           var movies=await _home.GetMoviesThreeMovies();
+            return View(movies);
         }
 
         public IActionResult Privacy()

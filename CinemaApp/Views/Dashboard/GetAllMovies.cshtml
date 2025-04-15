@@ -1,14 +1,18 @@
-﻿@using CinemaApp.Helpers
+﻿@using CinemaApp.Data.Dto
+@using CinemaApp.Helpers
 @model List<Movies>
-
 @{
     Pager pager = ViewBag.Pager as Pager ?? new Pager();
     int pageNo = pager.CurrentPage;
 }
-<h3>All Movies</h3>
+<h2>Welcome to Your Dashboard</h2>
+<h2><a class="btn btn-outline-success" asp-controller="Movies" asp-action="Create" type="button" class="btn btn-sm btn-outline-secondary">Create</a></h2>
+<h2>Your Movies</h2>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            
+           
             @foreach (var movies in Model)
             {
                 <div class="col">
@@ -20,11 +24,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Movies" asp-action="Details" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
+                                    
                                         <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                                         <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movies.Id" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                    }
+                                    
                                 </div>
                             </div>
                             <small class="text-body-secondary">9 mins</small>
@@ -36,7 +39,6 @@
         </div>
     </div>
 </div>
-
 <div class="container">
     @if (pager.StartPages > 0)
     {
@@ -44,7 +46,7 @@
             @for (var p = pager.StartPages; p <= pager.EndPages; p++)
             {
                 <li class="page-item @(p == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Movies" asp-action="Index" asp-route-pg="@p">@p</a>
+                    <a class="page-link" asp-controller="Dashboard" asp-action="GetAllMovies" asp-route-pg="@p">@p</a>
                 </li>
             }
         </ul>
