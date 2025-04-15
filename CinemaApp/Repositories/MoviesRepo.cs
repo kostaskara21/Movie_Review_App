@@ -26,7 +26,7 @@ namespace CinemaApp.Repositories
         public async Task<Movies> GetMovieById(int id)
         {
             //Movie we want to Display Details
-            var Movie = await _context.Movies.Include(x=>x.Reviews).FirstOrDefaultAsync(x => x.Id == id);
+            var Movie = await _context.Movies.Include(x=>x.Reviews).ThenInclude(u => u.AppUser).FirstOrDefaultAsync(x => x.Id == id);
             if (Movie == null) {
                 return null;
             }
@@ -39,7 +39,7 @@ namespace CinemaApp.Repositories
         {
             //Relared Movies
             //Include is for lazy loading for adding the revies of each movie and then include is for being able to acces the Appuser obj
-            var MoreMovies = await _context.Movies.Include(x=>x.Reviews).ThenInclude(i=>i.AppUser).Take(3).ToListAsync();
+            var MoreMovies = await _context.Movies.Where(x => x.Id != id).Include(x=>x.Reviews).ThenInclude(i=>i.AppUser).Take(3).ToListAsync();
             
             return MoreMovies;
         }

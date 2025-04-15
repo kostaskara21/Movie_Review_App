@@ -1,6 +1,4 @@
 ﻿@using CinemaApp.Data.Dto
-
-
 <!--
 In the Details View we want to pass the movie we want to show the details and also some movies related to this
 We can not pass in the View both the Movie and also a list of movies
@@ -15,7 +13,6 @@ Same thing as Dtos
         Movie Details
     </h1>
 
-   
     <div class="row">
         <!-- Movie Details Section (1st Column) -->
         <div class="col-md-6">
@@ -32,7 +29,7 @@ Same thing as Dtos
             </div>
         </div>
 
-       
+        <!-- Comment  Section  (for listing Comments) -->
         <div class="col-md-6">
             <div class="p-3 border rounded shadow-sm h-100 bg-white">
                 <h3 class="my-3">Comments</h3>
@@ -42,21 +39,28 @@ Same thing as Dtos
                     @foreach (var comm in Model.Reviews)
                     {
                         <div class="mb-3">
-                            <strong>@comm.AppUser.UserName:</strong> @comm.Comment
+                            <strong>@comm.AppUser.UserName :</strong> @comm.Comment
                         </div>
                     }
                 </div>
-
+               
                 <!-- Comment Form (Below the comment list) -->
                 <div class="mt-4">
                     <h4 class="my-3">Add a Comment</h4>
-                    <form>
+                   
+                    <form asp-controller="Reviews" asp-action="Create" method="post">
                         <div class="form-group">
-                            <label for="commentText">Your Comment</label>
-                            <textarea id="commentText" class="form-control" rows="3" placeholder="Write your comment here..."></textarea>
+                            <label name="Comment">Your Comment</label>
+                            <textarea name="Comment" id="commentText" class="form-control" rows="3" placeholder="Write your comment here..."></textarea>
                         </div>
+                           
+                        <input type="hidden" name="MovieId" value="@Model.MyMovie.Id" />
+
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     </form>
+                    
+                   
+
                 </div>
             </div>
         </div>
