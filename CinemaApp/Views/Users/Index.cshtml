@@ -1,0 +1,43 @@
+﻿@using CinemaApp.Data.Dto
+@using CinemaApp.Helpers
+@model List<UsersIndexDto>
+@{
+    Pager pager = ViewBag.Pager as Pager ?? new Pager();
+    int pageNo = pager.CurrentPage;
+}
+
+<h1>Hi here all The Users wil be dispplayed</h1>
+<h3>All Users</h3>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach (var user in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text">@user.Username</p>
+                            <p class="card-text">@user.FirstName</p>
+                            <p class="card-text">@user.LastName</p>
+                            <small class="text-body-secondary">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+<div class="container">
+    @if (pager.StartPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @for (var p = pager.StartPages; p <= pager.EndPages; p++)
+            {
+                <li class="page-item @(p == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-pg="@p">@p</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

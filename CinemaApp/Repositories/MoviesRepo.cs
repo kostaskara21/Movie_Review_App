@@ -26,7 +26,9 @@ namespace CinemaApp.Repositories
         public async Task<Movies> GetMovieById(int id)
         {
             //Movie we want to Display Details
-            var Movie = await _context.Movies.Include(x=>x.Reviews).ThenInclude(u => u.AppUser).FirstOrDefaultAsync(x => x.Id == id);
+            //Fisrt include is in order to be able to desplay the name of the cretator of the movies 
+            //Secod is to be able to inlcude the reviews for ezch movie anmd also to be anble to inclde the User(witrch made this review) from the Review model 
+            var Movie = await _context.Movies.Include(k=>k.AppUser).Include(x=>x.Reviews).ThenInclude(u => u.AppUser).FirstOrDefaultAsync(x => x.Id == id);
             if (Movie == null) {
                 return null;
             }

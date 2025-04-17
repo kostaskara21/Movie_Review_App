@@ -1,4 +1,5 @@
-﻿using CinemaApp.Helpers;
+﻿using CinemaApp.Data.Dto;
+using CinemaApp.Helpers;
 using CinemaApp.Models;
 
 namespace CinemaApp.Interfaces
@@ -6,7 +7,7 @@ namespace CinemaApp.Interfaces
     public interface IDashboard
     {
         Task<List<Movies>> GetAllMovies();
-        Task<(List<Movies> movies, Pager p)> GetAllMovies(int pg);
+        Task<(DashboardIndexDto movies, Pager p)> GetAllMovies(int pg);
 
     }
 }

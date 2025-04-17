@@ -22,6 +22,10 @@ namespace CinemaApp.Controllers
             return View();
         }
 
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> LogIn(AccountLogInDto accountLogInDto)
         {

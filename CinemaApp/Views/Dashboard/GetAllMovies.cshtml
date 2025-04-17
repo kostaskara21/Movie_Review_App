@@ -1,11 +1,30 @@
 ﻿@using CinemaApp.Data.Dto
 @using CinemaApp.Helpers
-@model List<Movies>
+@model DashboardIndexDto
 @{
     Pager pager = ViewBag.Pager as Pager ?? new Pager();
     int pageNo = pager.CurrentPage;
 }
 <h2>Welcome to Your Dashboard</h2>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text">@Model.AppUser.FirstName</p>
+                        <p class="card-text">@Model.AppUser.LastName</p>
+                        <p class="card-text">@Model.AppUser.UserName</p>
+                            <small class="text-body-secondary">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+
+            
+        </div>
+    </div>
+</div>
 <h2><a class="btn btn-outline-success" asp-controller="Movies" asp-action="Create" type="button" class="btn btn-sm btn-outline-secondary">Create</a></h2>
 <h2>Your Movies</h2>
 <div class="album py-5 bg-body-tertiary">
@@ -13,7 +32,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             
            
-            @foreach (var movies in Model)
+            @foreach (var movies in Model.MyMovies)
             {
                 <div class="col">
                     <div class="card shadow-sm">

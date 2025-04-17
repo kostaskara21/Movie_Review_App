@@ -195,7 +195,7 @@ namespace CinemaApp.Controllers
 
             }
             _movies.Remove(movie);
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index");
         }
 
 

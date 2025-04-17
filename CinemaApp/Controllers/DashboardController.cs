@@ -16,10 +16,12 @@ namespace CinemaApp.Controllers
         public async Task<IActionResult> GetAllMovies(int pg = 1)
         {
             //var mmymovies = await _dashboard.GetAllMovies(pg);
-            var (Movies, p) = await _dashboard.GetAllMovies(pg);
+            var (DashboardIndexDto, p) = await _dashboard.GetAllMovies(pg);
+            
+           
             ViewBag.Pager = p;
             
-            return View(Movies);
+            return View(DashboardIndexDto);
         }
     }
 }

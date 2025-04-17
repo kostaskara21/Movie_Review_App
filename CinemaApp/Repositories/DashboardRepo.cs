@@ -1,4 +1,5 @@
 ﻿using CinemaApp.Data;
+using CinemaApp.Data.Dto;
 using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
@@ -34,22 +35,32 @@ namespace CinemaApp.Repositories
             return MyMOvies;
         }
 
-        public async Task<(List<Movies> movies, Pager p)> GetAllMovies(int pg = 1)
+        public async Task<(DashboardIndexDto movies, Pager p)> GetAllMovies(int pg = 1)
         {
             var user = _httpContextAccessor.HttpContext?.User;
             var userid = _userManager.GetUserId(user);
-            var movies = await  _context.Movies.Where(i => i.AppUserId == userid).ToListAsync();
+            var movies = await  _context.Movies.Include(x => x.AppUser).Where(i => i.AppUserId == userid).ToListAsync();
             const int pageSize = 6;
             if (pg < 1)
             {
                 pg = 1;
             }
             int recsCount = movies.Count;
-            var pager = new Pager(recsCount, pg, pageSize); // This should now correctly initialize
+            var pager = new Pager(recsCount, pg, pageSize); 
             int recSkip = (pg - 1) * pageSize;
             var data = movies.Skip(recSkip).Take(pager.PageSize).ToList();
-
-            return (data, pager);
+            // Get the current AppUser (you can also do this through UserManager if needed)
+            var appUser =  data.FirstOrDefault()?.AppUser;
+            if (appUser == null)
+            {
+                appUser = await _userManager.GetUserAsync(user);
+            }
+            var dto = new DashboardIndexDto
+            {
+                MyMovies = movies,
+                AppUser = appUser,
+            };
+            return (dto, pager);
         }
     }
 }
