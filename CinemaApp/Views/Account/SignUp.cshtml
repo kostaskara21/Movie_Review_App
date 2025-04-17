@@ -17,31 +17,35 @@
         </div>
     }
 }
+<form asp-action="SignUp" method="post" class="mt-5 px-4">
+    <h1 class="mb-4">Please Sign Up</h1>
 
-<form asp-action="SignUp" method="post">
-    <h1>Please Sign Up</h1>
-    <div class="form-group">
-        <label asp-for="FirstName">FirstName</label>
-        <input asp-for="FirstName" type="text" class="form-control"  >
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName">LastName</label>
-        <input asp-for="LastName" type="text" class="form-control"  >
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="EmailAdress">Email address</label>
-        <input asp-for="EmailAdress" type="email" class="form-control" aria-describedby="emailHelp" >
-        <span asp-validation-for="EmailAdress" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password">Password</label>
-        <input asp-for="Password" type="password" class="form-control" >
-        <span asp-validation-for="Password" class="text-danger"></span>
+    <div class="form-group mb-3">
+        <label asp-for="FirstName" class="form-label">First Name</label>
+        <input asp-for="FirstName" type="text" class="form-control" placeholder="Enter your first name">
+        <span asp-validation-for="FirstName" class="text-danger small"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group mb-3">
+        <label asp-for="LastName" class="form-label">Last Name</label>
+        <input asp-for="LastName" type="text" class="form-control" placeholder="Enter your last name">
+        <span asp-validation-for="LastName" class="text-danger small"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="EmailAdress" class="form-label">Email Address</label>
+        <input asp-for="EmailAdress" type="email" class="form-control" placeholder="you@example.com">
+        <span asp-validation-for="EmailAdress" class="text-danger small"></span>
+    </div>
+
+    <div class="form-group mb-4">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Choose a secure password">
+        <span asp-validation-for="Password" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary px-4">Submit</button>
 </form>
+
 
 

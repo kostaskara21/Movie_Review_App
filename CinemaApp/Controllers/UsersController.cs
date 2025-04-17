@@ -2,17 +2,24 @@
 using CinemaApp.Data.Dto;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApp.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUsers _users;
-        public UsersController(IUsers users) {
+        private readonly UserManager<AppUser> _userManager;
+
+        public UsersController(IUsers users, UserManager<AppUser> userManager)
+        {
             _users = users;
+            _userManager = userManager;
         }
-       
+
 
         public async Task<IActionResult> Index(int pg = 1)
         {
@@ -26,6 +33,7 @@ namespace CinemaApp.Controllers
             {
                 var DtoUser = new UsersIndexDto
                 {
+                    id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Username = user.UserName
@@ -35,5 +43,26 @@ namespace CinemaApp.Controllers
             ViewBag.Pager = p;
             return View(AllUsers);
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            //var CurrentUser = await _userManager.GetUserAsync(User);
+            var movies = await _users.GetUsersMovies(id);
+            var DetailUserDto = new UsersDetailDto
+            {
+
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.UserName,
+                Movies = movies,
+            };
+            return View(DetailUserDto);
+        }
+
     }
 }

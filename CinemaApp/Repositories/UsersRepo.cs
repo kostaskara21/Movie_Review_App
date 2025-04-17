@@ -1,4 +1,5 @@
 ﻿using CinemaApp.Data;
+using CinemaApp.Data.Dto;
 using CinemaApp.Helpers;
 using CinemaApp.Interfaces;
 using CinemaApp.Models;
@@ -43,7 +44,7 @@ namespace CinemaApp.Repositories
             ///with the repo pattern we can not depend direcltyu to the userManager
             var user = _httpContextAccessor.HttpContext?.User;
             var userid = _userManager.GetUserId(user);
-            
+
             //We want all the users expect from the users who is signed in 
             var users = await _context.AppUsers.Where(u => u.Id != userid).ToListAsync();
             const int pageSize = 6;
@@ -59,5 +60,23 @@ namespace CinemaApp.Repositories
             return (data, pager);
 
         }
+
+
+
+
+
+
+        public async Task<List<Movies>> GetUsersMovies(string id)
+        {
+            var user = _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return null;
+            }
+            var movies = await _context.Movies.Where(x => x.AppUserId == id).ToListAsync();
+            return movies;
+        }
+
+       
     }
 }

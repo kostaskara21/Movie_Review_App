@@ -6,8 +6,8 @@
     int pageNo = pager.CurrentPage;
 }
 
-<h1>Hi here all The Users wil be dispplayed</h1>
-<h3>All Users</h3>
+
+<h1>All Users</h1>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -19,6 +19,11 @@
                             <p class="card-text">@user.Username</p>
                             <p class="card-text">@user.FirstName</p>
                             <p class="card-text">@user.LastName</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Users" asp-action="Details" asp-route-id="@user.id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                </div>
+                            </div>
                             <small class="text-body-secondary">9 mins</small>
                         </div>
                     </div>

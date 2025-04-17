@@ -1,0 +1,55 @@
+﻿@using CinemaApp.Data.Dto
+@using CinemaApp.Helpers
+@model UsersDetailDto
+
+<div class="container">
+    <h1 class="my-4">
+        Users Details
+    </h1>
+
+    <div class="row">
+        <!-- Movie Details Section (1st Column) -->
+        <div class="col-md-6">
+
+            <div class="p-3 border rounded shadow-sm h-100 bg-light">
+                <!--Here we are adding the image for the user(notepad)-->
+                
+                <ul>
+                    <li>@Model.FirstName</li>
+                    <li>@Model.LastName</li>
+                    <li>@Model.Username</li>
+                </ul>
+            </div>
+        </div>    
+    </div>
+</div>
+
+
+
+<!-- Related Movies Row -->
+<h3 class="my-4">Users Movies</h3>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="@movie.Image" alt="Thumbnail" class="bd-placeholder-img card-img-top" width="100%" height="225">
+
+                        <div class="card-body">
+                            <p class="card-text">@movie.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                   
+                                </div>
+                                <small class="text-body-secondary">9 mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

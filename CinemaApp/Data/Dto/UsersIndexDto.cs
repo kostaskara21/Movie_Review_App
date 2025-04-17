@@ -4,6 +4,8 @@ namespace CinemaApp.Data.Dto
 {
     public class UsersIndexDto
     {
+        public string? id { get;set; }
+
         [DisplayName("First Name")]
         public string FirstName { get; set; }
 

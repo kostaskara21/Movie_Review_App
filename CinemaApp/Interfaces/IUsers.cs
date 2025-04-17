@@ -1,4 +1,6 @@
-﻿using CinemaApp.Helpers;
+﻿using System.Runtime.CompilerServices;
+using CinemaApp.Data.Dto;
+using CinemaApp.Helpers;
 using CinemaApp.Models;
 
 namespace CinemaApp.Interfaces
@@ -8,5 +10,9 @@ namespace CinemaApp.Interfaces
 
         Task<List<AppUser>> Index();
         Task<(List<AppUser> movies, Pager p)> Index(int pg);
+
+      
+      
+        Task<List<Movies>> GetUsersMovies(string id);
     }
 }
