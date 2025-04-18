@@ -9,9 +9,9 @@ Same thing as Dtos
 
 
 <div class="container">
-    <h1 class="my-4">
+    <h2 class="my-4">
         Movie Details
-    </h1>
+    </h2>
 
     <div class="row">
         <!-- Movie Details Section (1st Column) -->
@@ -44,7 +44,7 @@ Same thing as Dtos
                     @foreach (var comm in Model.Reviews)
                     {
                         <div class="mb-3">
-                            <strong>@comm.AppUser.UserName :</strong> @comm.Comment
+                            <strong>@comm.AppUser.UserName: @comm.Comment</strong>
                         </div>
                     }
                 </div>
@@ -76,7 +76,7 @@ Same thing as Dtos
 
     
     <!-- Related Movies Row -->
-    <h3 class="my-4">Related Movies</h3>
+    <h2 class="my-4">Related Movies</h2>
     <div class="album py-5 bg-body-tertiary">
     <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

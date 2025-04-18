@@ -43,4 +43,60 @@ body {
     border-radius: 4px;
 }
 
+body {
+    background: url('/images/last.png') no-repeat center center fixed;
+    background-size: cover;
+    color: white; /* Optional: ensure text is visible */
+}
+
+p {
+    color: #000 !important;
+    background-color: #fff !important; /* solid white background */
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+strong {
+    color: #000 !important;
+    background-color: #fff !important; /* solid white background */
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+li {
+    color: #000 !important;
+    background-color:transparent; /* solid white background */
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+h3 {
+    color: #000 !important;
+    background-color: transparent; /* solid white background */
+   
+}
+h1 {
+    color: #000 !important;
+    background-color: transparent; /* solid white background */ 
+}
+h4 {
+    color: #000 !important;
+    background-color: transparent; /* solid white background */ 
+}
+
+.text-white {
+    color: white;
+}
+.text-white {
+    color: white !important;
+}
+
+
+
+
+
 
