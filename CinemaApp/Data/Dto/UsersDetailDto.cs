@@ -13,6 +13,8 @@ namespace CinemaApp.Data.Dto
         public string LastName { get; set; }
         public string Username { get; set; }
 
+        public string? Img { get; set; }
+
         public List<Movies>? Movies { get; set; }
     }
 }

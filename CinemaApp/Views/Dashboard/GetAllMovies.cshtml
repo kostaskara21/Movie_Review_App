@@ -9,13 +9,23 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <p class="card-text">@Model.AppUser.FirstName</p>
+
+            <div class="col">
+                <div class="card shadow-sm">
+                    @if (Model.AppUser.ImagUrl != null)
+                    {
+                        <img src="@Model.AppUser.ImagUrl" alt="Thumbnail" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                    }    
+                    <div class="card-body">
+                          <p class="card-text">@Model.AppUser.FirstName</p>
                         <p class="card-text">@Model.AppUser.LastName</p>
                         <p class="card-text">@Model.AppUser.UserName</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-controller="Users" asp-action="Edit" asp-route-id="@Model.AppUser.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit Profile</a>
+
+                            </div>
+                        </div>
                            
                         </div>
                     </div>

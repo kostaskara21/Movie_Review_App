@@ -77,6 +77,29 @@ namespace CinemaApp.Repositories
             return movies;
         }
 
-       
+        public async Task<bool> UpdateAsync(AppUser user)
+        {
+            _context.Users.Update(user);
+            return await SaveAsync();
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            var status = await _context.SaveChangesAsync();
+            return status > 0;
+        }
+
+
+        public async Task<AppUser> GetById(string id)
+        {
+           var userid=await _context.Users.FindAsync(id);
+           return userid;
+        }
+
+        public async Task<AppUser> GetByIdNoTracking(string id)
+        {
+            var userid=await _context.Users.Where(i=>i.Id==id).AsNoTracking().FirstOrDefaultAsync();
+            return userid;
+        }
     }
 }
