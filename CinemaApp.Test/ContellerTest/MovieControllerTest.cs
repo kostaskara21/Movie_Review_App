@@ -328,6 +328,7 @@ namespace CinemaApp.Test.ContellerTest
 
         }
 
+        //Still Need to Do the 
             //DeletionPostRedirect
             //EditPostRedirect
 
