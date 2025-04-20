@@ -87,10 +87,7 @@ namespace CinemaApp.Controllers
                 _movies.Add(movie);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                ModelState.AddModelError("", "Photo could not Upload ");
-            }
+            
             return View(movies);
            
         }
