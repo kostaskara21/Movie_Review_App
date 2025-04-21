@@ -39,13 +39,13 @@ namespace CinemaApp.Test.ContellerTest
             _movies= A.Fake<IMovies>();
             _photoService= A.Fake<IPhotoService>();
             _userManager= A.Fake<UserManager<AppUser>>();
-            _context = null;
+           
             
 
             //SUT
             //As we see in our controller(our controller class) is based on these dependencies
             //So we will make our Test class to also be Depending on the mocked ones
-            _moviesController = new MoviesController(_context, _movies, _photoService, _userManager);
+            _moviesController = new MoviesController( _movies, _photoService, _userManager);
 
         }
 
@@ -279,6 +279,61 @@ namespace CinemaApp.Test.ContellerTest
             result?.Should().BeOfType<NotFoundResult>();
         }
 
+        [Fact]
+        public async void MoviesController_EditPost_ReturnsRedirectrActionTOIndex()
+        {
+            int id = 1;
+            var Image = A.Fake<IFormFile>();
+            var movieEditDto = new MovieEditDto
+            {
+                Id = id,
+                Title = "Title",
+                Description = "Description",
+                Image = Image
+            };
+            var movie=A.Fake<Movies>();
+            A.CallTo(() => _movies.GetMovieByIdNoTrack(id)).Returns(movie);
+           
+            movie.Image = "http/MyImage/ThisUrl";
+            A.CallTo(() => _photoService.DeletePhotoAsync(movie.Image)).Returns(Task.FromResult(new DeletionResult
+            {
+                Result = "ok"
+            }));
+
+           
+            //Even tho we are testing the logic of the controller we still need to call pur dependencies
+            //if we dont when we call the method we will have nul values
+            var result=A.CallTo(() => _photoService.AddPhotoAsync(Image))
+                .Returns(Task.FromResult(new ImageUploadResult
+                {
+                    Url = new Uri("http://fake.com/fake.jpg"),  
+                    PublicId = "fake-id"  
+                }));
+
+            var uid=A.CallTo(() => _userManager.GetUserId(A<ClaimsPrincipal>.Ignored))
+                .Returns("fake-user-id");
+
+            var NewMovie = new Movies
+            {
+                Id = movieEditDto.Id,
+                Title = movieEditDto.Title,
+                Description = movieEditDto.Description,
+                Image = result.ToString(),
+                Categories = new Categories(),
+                AppUserId = uid.ToString(),
+            };
+            // Act
+            var status = await _moviesController.Edit(id,movieEditDto);
+
+            // Assert
+            status.Should().BeOfType<RedirectToActionResult>();
+            var redirect = status as RedirectToActionResult;
+           
+            redirect!.ActionName.Should().Be("Index");
+
+
+        }
+
 
         [Fact]
         public async Task MoviesController_DeleteGet_ReturnViewResult()
@@ -328,9 +383,40 @@ namespace CinemaApp.Test.ContellerTest
 
         }
 
-        //Still Need to Do the 
-            //DeletionPostRedirect
-            //EditPostRedirect
+        [Fact]
+        public async void MoviesController_DeletePost_ReturnRedirectToActionResult()
+        {
+            int id = 1;
+            var Image = A.Fake<IFormFile>();
+            var movieDeleteDto = new MovieDeleteDto
+            {
+                Id = id,
+                Title = "Title",
+                Description = "Description",
+                Image = Image
+            };
+            var movie = A.Fake<Movies>();
+            A.CallTo(() => _movies.GetMovieById(id)).Returns(movie);
+
+            movie.Image = "http/MyImage/ThisUrl";
+            A.CallTo(() => _photoService.DeletePhotoAsync(movie.Image)).Returns(Task.FromResult(new DeletionResult
+            {
+                Result = "ok"
+            }));
+
+            //Act
+            var result = await _moviesController.Delete(id, movieDeleteDto);
+
+            // Assert
+            result.Should().BeOfType<RedirectToActionResult>();
+            var redirect = result as RedirectToActionResult;
+
+            redirect!.ActionName.Should().Be("Index");
+
+
+        }
+
+
 
     }
 }

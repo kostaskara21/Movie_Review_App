@@ -100,5 +100,14 @@ namespace CinemaApp.Repositories
             return (data, pager);
         }
 
+        public async Task<Movies> GetMovieByIdNoTrack(int id)
+        {
+            var Movie = await _context.Movies.AsNoTracking().Include(k => k.AppUser).Include(x => x.Reviews).ThenInclude(u => u.AppUser).FirstOrDefaultAsync(x => x.Id == id);
+            if (Movie == null)
+            {
+                return null;
+            }
+            return Movie;
+        }
     }
 }

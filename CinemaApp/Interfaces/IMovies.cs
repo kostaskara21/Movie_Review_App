@@ -20,6 +20,7 @@ namespace CinemaApp.Interfaces
         // 1)pass specific Movie,
         // 2) pass List of related Movie
         Task<Movies> GetMovieById(int id);
+        Task<Movies> GetMovieByIdNoTrack(int id);
         Task<List<Movies>> GetRelatedMovies(int id);
 
 

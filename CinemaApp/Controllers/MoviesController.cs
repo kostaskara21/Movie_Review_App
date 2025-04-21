@@ -18,13 +18,13 @@ namespace CinemaApp.Controllers
         private readonly IPhotoService _photoService;
         private readonly UserManager<AppUser> _userManager;
 
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
         
 
-
-        public MoviesController(ApplicationDbContext context, IMovies movies, IPhotoService photoService,UserManager<AppUser> userManager)
+        //In the Constructor we had the ApplicationDbContext
+        public MoviesController( IMovies movies, IPhotoService photoService,UserManager<AppUser> userManager)
         {
-            _context = context;
+            //_context = context;
             _movies = movies;
             _photoService = photoService;
             _userManager = userManager;
@@ -119,8 +119,9 @@ namespace CinemaApp.Controllers
                 ModelState.AddModelError("", "Changes Could not be made Try Again");
                 return View();
             }
-            var movie = await _movies.GetMovieById(id);
-            _context.Entry(movie).State = EntityState.Detached; // Detach the original entity
+            //var movie = await _movies.GetMovieById(id);
+            var movie = await _movies.GetMovieByIdNoTrack(id);
+            //_context.Entry(movie).State = EntityState.Detached; // Detach the original entity
 
             if (movie == null)
             {
